@@ -1,20 +1,20 @@
+import java.lang.Iterable;
+import java.util.Iterator;
+
 public class MyList<T> implements Iterable<T>
 {
 	protected Node head, tail;
-	protected size;
+	protected int size;
 
 	protected class Node
 	{
 		T data;
 		Node next, previous;
 
-		public Node() {
-			Node(0, null, null);
-		}
-		public Node(T d, Node n, Node p) {
+		public Node(T d) {
 			this.data = d;
-			this.next = n;
-			this.previous = p;
+			this.next = null;
+			this.previous = null;
 		}
 	}
 
@@ -29,7 +29,7 @@ public class MyList<T> implements Iterable<T>
 		}
 
 		protected Node currentNode() {
-			return this.current;
+			return current;
 		}
 
 		protected boolean forward() {
@@ -41,25 +41,21 @@ public class MyList<T> implements Iterable<T>
 		}
 
 		public T next() {
-			return current.next;
+			return current.next.data;
 		}
 
 		public void remove() {
-			this.previous.next = this.next;
-			this.next.previous = this.previous;
-			this.next = this.previous = null;
+			current.previous.next = current.next;
+			current.next.previous = current.previous;
+			current.next = current.previous = null;
 		}
 
 	}
 
-	public MyList() {
-		MyList(0, null, null);
-	}
-
-	public MyList(int s, Node h, Node t) {
+	public MyList(int s) {
 		this.size = s;
-		this.head = h;
-		this.tail = t;
+		this.head = null;
+		this.tail = null;
 	}
 
 	public boolean isEmpty() {
@@ -72,7 +68,7 @@ public class MyList<T> implements Iterable<T>
 
 	public void insert(T obj, int pos) {
 		if(isEmpty()){
-			head = tail = new Node(size, null, null);
+			head = tail = new Node(obj);
 		} else {
 			for(int i = 0; i < size; ++i) {
 			/*
@@ -86,7 +82,7 @@ public class MyList<T> implements Iterable<T>
 	 *TODO: Add insert and remove
 	 */
 
-	public Iterator<t> iterator() {
+	public Iterator<T> iterator() {
 		return iterator(true);
 	}
 
