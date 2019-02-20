@@ -32,8 +32,8 @@ public class MyList<T> implements Iterable<T>
 			return current;
 		}
 
-		protected boolean forward() {
-			return this.forward;
+		protected void forward() {
+			current = current.next;
 		}
 
 		public boolean hasNext() {
@@ -52,14 +52,26 @@ public class MyList<T> implements Iterable<T>
 
 	}
 
-	public MyList(int s) {
-		this.size = s;
-		this.head = null;
-		this.tail = null;
+	public MyList(int size) {
+		this.size = size;
+		this.head = this.tail;
+
+	}
+
+	public void pop(T obj) {
+		for(int i =0; i < size; ++i) {
+			insert(obj , 0);
+		}
+	}
+
+	public void print() {
+		Iterator itr = iterator();
+		while(itr.hasNext())
+		    System.out.println(itr.next());
 	}
 
 	public boolean isEmpty() {
-		return size == 0;
+		return (size == 0) || (head == null);
 	}
 
 	public int getSize() {
@@ -67,14 +79,19 @@ public class MyList<T> implements Iterable<T>
 	}
 
 	public void insert(T obj, int pos) {
+		Node newNode = new Node(obj);
+
 		if(isEmpty()){
-			head = tail = new Node(obj);
+			head = tail = newNode;
+			newNode.data = obj;
+
 		} else {
-			for(int i = 0; i < size; ++i) {
-			/*
-			 *TODO: finish for loop
-			 * */	
-			}
+			newNode.next = head.next;
+			newNode.data = obj;
+			if(newNode.next == null)
+			    tail = newNode;
+			head = newNode;
+
 		}
 	}
 

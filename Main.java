@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Main
 {
+    	static Scanner scanner = new Scanner(System.in);
+
 	private static void displayMenu() {
 		System.out.println("+===================================================+");
 		System.out.println("|    CS 3990 Assignment:  Linked List Structures    |");
@@ -34,24 +36,30 @@ public class Main
 		System.out.println("+===================================================+");
 	}
 
-	private static void generateList() {
+	public static MyList<Integer> generateList() {
+		System.out.print("Enter size for Lists : ");
+		int size = scanner.nextInt();
+		scanner.nextLine();
 
+		MyList<Integer> list =  new MyList<Integer>(size);
+		list.pop(size);
+		return list;
 	}
 
 	public static void main(String[] args) {
 		char c = 'c';
-		Scanner scanner = new Scanner(System.in);
-		MyList<Integer> list = new MyList<Integer>(0);
 
 		while (c != 'e' && c != 'E') {
 			System.out.printf("Enter H/h/? for help, or commands : ");
 			c = scanner.nextLine().charAt(0);
+			MyList<Integer> list = null;
 
 			switch (c){
 				case 'g':
-					generateList();
+					list = generateList();
 					break;
 				case 's': //List members in stack
+					list.print();
 					break; 
 				case 'q': //List members in queue
 					break;
