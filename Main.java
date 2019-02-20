@@ -36,30 +36,25 @@ public class Main
 		System.out.println("+===================================================+");
 	}
 
-	public static MyList<Integer> generateList() {
-		System.out.print("Enter size for Lists : ");
-		int size = scanner.nextInt();
-		scanner.nextLine();
+	public static void generateList() {
 
-		MyList<Integer> list =  new MyList<Integer>(size);
-		list.pop(size);
-		return list;
 	}
 
 	public static void main(String[] args) {
 		char c = 'c';
+		//MyStack<Member> stack = null;
+		//MyQueue<Member> queue = null;
+		//MySortedqueue<Member> sQueue = null;
 
 		while (c != 'e' && c != 'E') {
 			System.out.printf("Enter H/h/? for help, or commands : ");
 			c = scanner.nextLine().charAt(0);
-			MyList<Integer> list = null;
 
 			switch (c){
 				case 'g':
-					list = generateList();
+					generateList();
 					break;
 				case 's': //List members in stack
-					list.print();
 					break; 
 				case 'q': //List members in queue
 					break;
@@ -88,3 +83,4 @@ public class Main
 		return;
 	}
 }
+

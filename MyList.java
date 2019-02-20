@@ -32,16 +32,18 @@ public class MyList<T> implements Iterable<T>
 			return current;
 		}
 
-		protected void forward() {
+		public void advance() {
 			current = current.next;
 		}
 
 		public boolean hasNext() {
-			return current.next != null;
+			return current != null;
 		}
 
 		public T next() {
-			return current.next.data;
+			T tmp = current.data;
+			current = current.next;
+			return tmp;
 		}
 
 		public void remove() {
@@ -54,45 +56,42 @@ public class MyList<T> implements Iterable<T>
 
 	public MyList(int size) {
 		this.size = size;
-		this.head = this.tail;
+		this.head = this.tail = null;
 
 	}
 
 	public void pop(T obj) {
 		for(int i =0; i < size; ++i) {
-			insert(obj , 0);
+			add(obj);
 		}
 	}
 
-	public void print() {
-		Iterator itr = iterator();
-		while(itr.hasNext())
+	/*public void print() {
+		Iterator<T> itr = iterator();
+
+		while(itr.hasNext()){
 		    System.out.println(itr.next());
+		}
 	}
+	*/
 
 	public boolean isEmpty() {
-		return (size == 0) || (head == null);
+		return (size == 0) || (tail == null);
 	}
 
 	public int getSize() {
 		return this.size;
 	}
 
-	public void insert(T obj, int pos) {
+	public void add(T obj) {
 		Node newNode = new Node(obj);
 
 		if(isEmpty()){
-			head = tail = newNode;
-			newNode.data = obj;
-
+			tail = newNode;
 		} else {
-			newNode.next = head.next;
-			newNode.data = obj;
-			if(newNode.next == null)
-			    tail = newNode;
-			head = newNode;
-
+			newNode.next = head;
 		}
+		head = newNode;
 	}
 
 	/*
@@ -108,3 +107,4 @@ public class MyList<T> implements Iterable<T>
 	}
 
 }
+
