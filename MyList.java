@@ -37,11 +37,11 @@ public class MyList<T> implements Iterable<T>
 		}
 
 		public boolean hasNext() {
-			return current != null;
+			return current.next != null;
 		}
 
 		public T next() {
-			T tmp = current.data;
+			T tmp = current.next.data;
 			current = current.next;
 			return tmp;
 		}
@@ -54,15 +54,14 @@ public class MyList<T> implements Iterable<T>
 
 	}
 
-	public MyList(int size) {
-		this.size = size;
+	public MyList() {
+		this.size = 0;
 		this.head = this.tail = null;
-
 	}
 
 	public void pop(T obj) {
 		for(int i =0; i < size; ++i) {
-			add(obj);
+			insert(obj, 0);
 		}
 	}
 
@@ -83,20 +82,50 @@ public class MyList<T> implements Iterable<T>
 		return this.size;
 	}
 
-	public void add(T obj) {
+	protected void insert(T obj, int pos) {
 		Node newNode = new Node(obj);
+        ListIterator litr = new ListIterator(true);
 
-		if(isEmpty()){
-			tail = newNode;
-		} else {
-			newNode.next = head;
-		}
-		head = newNode;
+        while(litr.hasNext() && --pos > -1) //advance litr to desired position
+            litr.next();
+        newNode.previous = litr.current;
+        litr.next();
+        newNode.next = litr.current;
+
+        if(newNode.previous == null)
+            head = newNode;
+        if(newNode.next == null)
+            tail = newNode;
+        ++size;
 	}
 
-	/*
-	 *TODO: Add insert and remove
-	 */
+	public void insertFront(T obj) {
+	    insert(obj, 0);
+    }
+
+    public void insertBack(T obj) {
+	    insert(obj, size);
+    }
+
+	protected T remove(int pos) {
+	    T tmp = null;
+        ListIterator litr = new ListIterator(true);
+
+        while(litr.hasNext() && --pos > 0) //advance litr to desired position
+            tmp = litr.next();
+
+        litr.remove();
+        --size;
+        return tmp;
+    }
+
+    public T removeFront() {
+	    return remove(0);
+    }
+
+    public T removeBack() {
+	    return remove(size);
+    }
 
 	public Iterator<T> iterator() {
 		return iterator(true);
@@ -107,4 +136,3 @@ public class MyList<T> implements Iterable<T>
 	}
 
 }
-
