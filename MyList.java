@@ -10,6 +10,9 @@ public class MyList<T> implements Iterable<T>
 	protected Node head, tail;
 	protected int size;
 
+	/*
+	* Node for linked list
+	*/
 	protected class Node
 	{
 		T data;
@@ -22,6 +25,9 @@ public class MyList<T> implements Iterable<T>
 		}
 	}
 
+	/*
+	* Iterator that covers entire list
+	*/
 	protected class ListIterator implements Iterator<T>
    	{
 		Node current;
@@ -61,11 +67,18 @@ public class MyList<T> implements Iterable<T>
         }
 	}
 
+	/*
+	* Constructor
+	*/
 	public MyList() {
 		this.size = 0;
 		this.head = this.tail = null;
 	}
 
+	/*
+	* Removes node from front of list
+	* @return T : type of class used in list
+	*/
     public T pop(T obj) {
         T tmp = head.data;
         remove(0);
@@ -80,6 +93,9 @@ public class MyList<T> implements Iterable<T>
 		return this.size;
 	}
 
+	/*
+	* Inserts node into any location
+	*/
 	protected void insert(T obj, int pos) {
 		Node newNode = new Node(obj);
         Node currNode = head;
@@ -99,6 +115,9 @@ public class MyList<T> implements Iterable<T>
         ++size;
     }
 
+	/*
+	* Helper function for insert
+	*/
     private void insertFront(T obj) {
         Node node = new Node(obj);
         if (isEmpty()) {
@@ -109,7 +128,10 @@ public class MyList<T> implements Iterable<T>
         node.next = head;
         head = node;
     }
-
+	
+	/*
+	* Helper function for insert
+	*/
     private void insertBack(T obj) {
         Node node = new Node(obj);
 
@@ -122,6 +144,9 @@ public class MyList<T> implements Iterable<T>
         tail = node;
     }
 
+	/*
+	* Removes node from any position on list
+	*/
 	protected T remove(int pos) {
         Node tmpNode = head;
 
@@ -144,6 +169,9 @@ public class MyList<T> implements Iterable<T>
         return tmpData;
     }
 
+	/*
+	* Helper function for remove
+	*/
     private T removeFront() {
         Node tmpNode = head;
         T tmpData = head.data;
@@ -154,6 +182,9 @@ public class MyList<T> implements Iterable<T>
         return tmpData;
     }
 
+	/*
+	* Helper function for remove
+	*/
     private T removeBack() {
         Node tmpNode = tail;
         T tmpData = tail.data;
@@ -164,10 +195,16 @@ public class MyList<T> implements Iterable<T>
         return tmpData;
     }
 
+	/*
+	* Base case iterator for traversing list
+	*/
 	public Iterator<T> iterator() {
 		return iterator(true);
 	}
 
+	/*
+	* Custom case iterator for traversing list
+	*/
 	public Iterator<T> iterator(boolean forward) {
 		return new ListIterator(forward);
 	}

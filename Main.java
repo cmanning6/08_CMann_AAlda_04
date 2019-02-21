@@ -9,7 +9,9 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-
+	/*
+	* Prints the menu
+	*/
     private static void displayMenu() {
         System.out.println("+===================================================+");
         System.out.println("|    CS 3990 Assignment:  Linked List Structures    |");
@@ -42,6 +44,9 @@ public class Main {
         System.out.println("+===================================================+");
     }
 
+	/*
+	* Generates Members for different lists
+	*/
     public static void generateList(MyStack<Member> stack) {
 
         while (!stack.isEmpty())
@@ -57,6 +62,9 @@ public class Main {
         }
     }
 
+	/*
+	* Returns a type of Member for the generateList function
+	*/
     public static Member nextMember() {
         Random rnd = new Random();
         switch ((rnd.nextInt(5)) + 1) {
@@ -76,6 +84,9 @@ public class Main {
         }
     }
 
+	/*
+	* Prints contents of any list
+	*/
     private static void print(MyList<Member> list) {
         Iterator<Member> itr = list.iterator(true);
         int numLine = 0;
