@@ -3,7 +3,6 @@
  * Created on : February 4th, 2019
  * Instructor : Dr. Wang
  */
-package Lab01;
 
 import java.util.Random;
 

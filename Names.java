@@ -1,5 +1,3 @@
-package Lab01;
-
 public interface Names {
 	// Fields in interface are always and implicitly public, static and final.
     // All methods in interface are implicitly public and abstract.

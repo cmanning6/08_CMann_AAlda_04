@@ -1,10 +1,8 @@
-
 /**
  * @Author Ian Thomas , Chad Manning
  * Created on : February 4th, 2019
  * Instructor : Dr. Wang
  */
-package Lab01;
 
 public class Staff extends Employee {
     public Staff() {
