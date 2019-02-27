@@ -3,6 +3,7 @@
  * Created on : February 20th, 2019
  * Instructor : Dr. Wang
  */
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
@@ -47,18 +48,26 @@ public class Main {
 	/*
 	* Generates Members for different lists
 	*/
-    public static void generateList(MyStack<Member> stack) {
+    public static void generateList(MyStack<Member> stack,
+                                     MyQueue<Member> q,
+                                     MySortedQueue<Member> sQ) {
 
         while (!stack.isEmpty())
             stack.pop();
-
+        while (!q.isEmpty())
+            q.dequeue();
+        while (!sQ.isEmpty())
+            sQ.dequeue(sQ.head.data);
         System.out.print("Enter size for Lists : ");
         int size = scanner.nextInt();
         scanner.nextLine(); // flush scanner
         System.out.println();
 
         for (int i = 0; i < size; ++i) {
-            stack.push(nextMember());
+            Member m = nextMember();
+            stack.push(m);
+            q.enqueue(m);
+            sQ.enqueue(m);
         }
     }
 
@@ -79,7 +88,7 @@ public class Main {
             case 5:
                 return new Employee();
             default:
-                return null;
+                return new Member();
 
         }
     }
@@ -97,9 +106,15 @@ public class Main {
         while (itr.hasNext() && !quitEarly) {
             System.out.println(itr.next());
             if (++numLine > 19) {
+                char c = 'c';
                 System.out.println();
-                System.out.print("Press Q/q to quit early or C/c to continue : ");
-                char c = scanner.nextLine().charAt(0);
+                System.out.print("Press Q/q to quit early or ENTER to continue : ");
+                try {
+                    c = scanner.nextLine().charAt(0);
+                } catch (IndexOutOfBoundsException e) {
+                    c = 'c';
+                }
+
                 System.out.println();
                 if (c == 'Q' || c == 'q')
                     quitEarly = true;
@@ -118,20 +133,29 @@ public class Main {
         System.out.println();
     }
 
+//=============================================================================
+//          MAIN
+//=============================================================================
     public static void main(String[] args) {
         char c = 'c';
         MyStack<Member> stack = new MyStack<>();
-        //MyQueue<Member> queue = null;
-        //MySortedqueue<Member> sQueue = null;
+        MyQueue<Member> queue = new MyQueue<>();
+        MySortedQueue<Member> sQueue = new MySortedQueue<>();
 
         while (c != 'e' && c != 'E') {
+            System.out.print("------------------------------------");
+            System.out.println("------------------------------------");
             System.out.print("Enter H/h/? for help, or commands : ");
-            c = scanner.nextLine().charAt(0);
+                try {
+                    c = scanner.nextLine().charAt(0);
+                } catch (IndexOutOfBoundsException e) {
+                    c = 'c';
+                }
 
             switch (c) {
                 case 'g':
                 case 'G':
-                    generateList(stack);
+                    generateList(stack, queue, sQueue);
                     break;
                 case 's':
                 case 'S':
@@ -139,19 +163,33 @@ public class Main {
                     break;
                 case 'q':
                 case 'Q':
+                    print(queue);
                     break;
                 case 'o':
                 case 'O':
+                    print(sQueue);
                     break;
                 case 'd':
                 case 'D':
-                    if (stack.getSize() > 0)
-                        System.out.printf("Removed : %d\n\n", stack.pop().ID);
+                    if (stack.getSize() > 0) {
+                        System.out.printf("Popped : %s\n", stack.top().toString());
+                        sQueue.dequeue(stack.pop());
+                        System.out.printf("Dequeued : %s\n\n", queue.dequeue().toString());
+                    }
                     else
-                        System.out.print("Stack is empty.\n\n");
+                        System.out.print("Lists are empty.\n\n");
                     break;
                 case 'i':
                 case 'I':
+                    
+                        Member m = nextMember();
+                        stack.push(m);
+                        queue.enqueue(m);
+                        sQueue.enqueue(m);
+                        System.out.print("Added ");
+                        System.out.println(m.toString());
+                        System.out.println();
+                    
                     break;
                 case '?':
                 case 'h':

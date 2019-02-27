@@ -56,12 +56,6 @@ public class MyList<T> implements Iterable<T>
 			return tmp;
 		}
 
-		public void remove() {
-			current.previous.next = current.next;
-			current.next.previous = current.previous;
-			current.next = current.previous = null;
-		}
-
         public String toString() {
             return current.toString();
         }
@@ -73,16 +67,6 @@ public class MyList<T> implements Iterable<T>
 	public MyList() {
 		this.size = 0;
 		this.head = this.tail = null;
-	}
-
-	/*
-	* Removes node from front of list
-	* @return T : type of class used in list
-	*/
-    public T pop(T obj) {
-        T tmp = head.data;
-        remove(0);
-        return tmp;
 	}
 
 	public boolean isEmpty() {
@@ -105,7 +89,7 @@ public class MyList<T> implements Iterable<T>
         else if (pos >= size)
             insertBack(obj);
         else {
-            for (int i = 0; i < pos; ++i) {
+            for (int i = 0; i < pos-1; ++i) {
                 currNode = currNode.next;
             }
             newNode.next = currNode.next;
@@ -136,8 +120,9 @@ public class MyList<T> implements Iterable<T>
         Node node = new Node(obj);
 
         if (isEmpty()) {
-            head = node;
+            head = tail= node;
         } else {
+        	tail.next = node;
             node.previous = tail;
         }
 
@@ -148,23 +133,28 @@ public class MyList<T> implements Iterable<T>
 	* Removes node from any position on list
 	*/
 	protected T remove(int pos) {
-        Node tmpNode = head;
 
-        if (pos == 0) {
+        if (pos <= 0) {
             return removeFront();
         }
-        if (pos > (size - 1)) {
+        if (pos >= (size - 1)) {
             return removeBack();
         }
+        Node prevNode = head;
+        Node currNode = head.next;
+        Node nextNode = head.next.next;
 
-        for (int i = 0; i <= pos; ++i) {
-            tmpNode = tmpNode.next;
+        for (int i = 0; i < pos-1; ++i) {
+            prevNode = currNode;
+            currNode = nextNode;
+            nextNode = nextNode.next;
         }
 
-        T tmpData = tmpNode.data;
-        tmpNode.previous.next = tmpNode.next;
-        tmpNode.next.previous = tmpNode.previous;
-        tmpNode.next = tmpNode.previous = null;
+        T tmpData = currNode.data;
+        
+        prevNode.next = nextNode;
+        nextNode.previous = prevNode;
+        currNode.next = currNode.previous = null;
         --size;
         return tmpData;
     }
@@ -189,8 +179,9 @@ public class MyList<T> implements Iterable<T>
         Node tmpNode = tail;
         T tmpData = tail.data;
 
-        tail = tail.previous;
-        tmpNode.previous = null;
+        tail = tmpNode.previous;
+        tmpNode.previous.next = null;
+        tmpNode.previous = tmpNode.next = null;
         --size;
         return tmpData;
     }

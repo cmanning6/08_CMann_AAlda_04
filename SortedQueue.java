@@ -15,28 +15,21 @@ public class SortedQueue<T extends Comparable<T>> extends MyList<T>{
 	/*
 	* Compares item to others in queue and puts it in proper place
 	*/
-	public SortedQueue enqueue(T data) {
-		if (head == null || data.compareTo(head.data) <= 0) {
-			insertFront(data);
-			return this;
-		}
-		if (data.compareTo(tail.data >= 0)) {
-			insertBack(data);
-			return this;
-		}
+	public void enqueue(T obj) {
+		T tmpMem = head;
+		int pos = 0;
 
-		Node current = head, tmpNode = new Node(data);
-
-		while (current.data.compareTo(data) < 0) {
-			current = current.next;
+		if (tmpMem == null) {
+			insert(obj, 0);
+			return;
 		}
 
-		tmpNode.previous = current.previous;
-		tmpNode.next = current;
-		current.previous = current.previous.next = tmpNode;
-		// super.size++;
+		while (obj.compareTo(tmpMem) > 0) {
+			++pos;
+			tmpMem = tmpMem.next;
+		}
 
-		return this;
+		insert(obj, pos);
 	}
 
 	/*

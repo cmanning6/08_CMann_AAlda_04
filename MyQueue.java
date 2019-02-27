@@ -7,31 +7,23 @@
  */
 public class MyQueue<T> extends MyList<T> {
 
-	int maxSize;
-
 	/*
 	* Base constructor 
 	*/
-	public MyQueue(int size) {
+	public MyQueue() {
 		super();
-		head = null;
-		tail = null;
-		int maxSize = size;
 	}
 	/*
 	* Adds new item to the back of the queue
 	*/
 	public void enqueue(T data) {
-		if(getSize() < maxSize)
-			insertBack(data);
+		insert(data, size);
 	}
 
 	/*
 	* Removes front most item from queue
 	*/
 	public T dequeue() {
-		if (getSize() == 0)
-            System.out.println("Queue is empty");
-        return removeBack();
+        return remove(0);
 	}
 }
